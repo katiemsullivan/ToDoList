@@ -1,9 +1,11 @@
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -12,8 +14,9 @@ import javax.swing.JTextField;
 
 public class ToDoListPanel extends JPanel {
 
+		Container c = getRootPane();
 		JLabel title = new JLabel("Katie's To-Do List");
-		JTextField inputBox = new JTextField(25);
+		JTextField inputBox = new JTextField();
 		JButton addButton = new JButton("add");
 		JButton removeButton = new JButton("remove");
 		ToDoDAO itemDAO = new ToDoDAO();
@@ -22,6 +25,14 @@ public class ToDoListPanel extends JPanel {
 		JScrollPane scroll = new JScrollPane(list);
 		
 		public ToDoListPanel() {
+			Container c = getRootPane();
+			title.setFont(new Font("Arial", Font.BOLD, 24));
+			inputBox.setPreferredSize(new Dimension(100, 25));
+			
+		    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	        scroll.setPreferredSize(new Dimension(350, 100));
+			
 			AddButtonListener a = new AddButtonListener();
 			addButton.addActionListener(a);
 			RemoveButtonListener r = new RemoveButtonListener();
@@ -42,15 +53,15 @@ public class ToDoListPanel extends JPanel {
 				String tempItem = inputBox.getText();
 				ToDoItem t = new ToDoItem(tempItem);
 				itemDAO.addNewItem(t);
+				listModel.add(t);
+				list.setListData(listModel.toArray());
 				
 				inputBox.setText(""); //Clears input box for next item
 				System.out.println("Item added to database.");
-				
-				removeAll();
-				JPanel newPanel = new ToDoListPanel();
-				add(newPanel);
-	            revalidate();
-	            newPanel.repaint();
+
+				scroll.revalidate();
+	            System.out.println("revalidated");
+	            scroll.repaint();
 			}
 			
 		}
@@ -69,11 +80,9 @@ public class ToDoListPanel extends JPanel {
 					System.out.println("Item removed from database.");
 				}
 		
-				removeAll();
-				JPanel newPanel = new ToDoListPanel();
-				add(newPanel);
-	            revalidate();
-	            newPanel.repaint();
+				scroll.revalidate();
+				System.out.println("revalidated");
+				scroll.repaint();
 			}
 			
 		}
