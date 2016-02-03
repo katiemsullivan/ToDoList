@@ -16,7 +16,7 @@ public class ToDoListPanel extends JPanel {
 
 		Container c = getRootPane();
 		JLabel title = new JLabel("Katie's To-Do List");
-		JTextField inputBox = new JTextField();
+		JTextField inputBox = new JTextField(10);
 		JButton addButton = new JButton("add");
 		JButton removeButton = new JButton("remove");
 		ToDoDAO itemDAO = new ToDoDAO();
@@ -27,7 +27,6 @@ public class ToDoListPanel extends JPanel {
 		public ToDoListPanel() {
 			Container c = getRootPane();
 			title.setFont(new Font("Arial", Font.BOLD, 24));
-			inputBox.setPreferredSize(new Dimension(100, 25));
 			
 		    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
